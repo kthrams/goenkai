@@ -1,26 +1,180 @@
 @import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-sans);
+  --font-serif: var(--font-serif);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+  --color-chat-bot: var(--chat-bot);
+  --color-chat-user: var(--chat-user);
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+/* ===== GOENKAI DESIGN SYSTEM ===== */
+/* Palette: Warm earthy tones inspired by Aesop, Waking Up, Amangiri */
+/* Philosophy: Frame, don't compete. Goenka's words are the star. */
+
+:root {
+  --radius: 1rem;
+
+  /* Warm cream parchment — like handmade paper */
+  --background: #F5F0E8;
+  --foreground: #3D3229;
+
+  --card: #F0E9DF;
+  --card-foreground: #3D3229;
+  --popover: #F5F0E8;
+  --popover-foreground: #3D3229;
+
+  /* Muted rust/terracotta accent */
+  --primary: #9D5F1B;
+  --primary-foreground: #FAF6F0;
+
+  /* Sand — used for Goenkai chat bubbles */
+  --secondary: #E9DECE;
+  --secondary-foreground: #3D3229;
+
+  --muted: #EDE8DF;
+  --muted-foreground: #8C7E72;
+
+  /* Light sage — used for user chat bubbles */
+  --accent: #DDE4D6;
+  --accent-foreground: #3D3229;
+
+  --destructive: #B44040;
+
+  /* Warm borders */
+  --border: #D6CFC6;
+  --input: #D6CFC6;
+  --ring: #9D5F1B;
+
+  /* Chat-specific tokens */
+  --chat-bot: #E9DECE;
+  --chat-user: #DDE4D6;
+
+  /* Charts (earthy palette) */
+  --chart-1: #9D5F1B;
+  --chart-2: #7F9A83;
+  --chart-3: #8C7E72;
+  --chart-4: #C4813A;
+  --chart-5: #5B7A5E;
+
+  /* Sidebar (if used later) */
+  --sidebar: #EDE8DF;
+  --sidebar-foreground: #3D3229;
+  --sidebar-primary: #9D5F1B;
+  --sidebar-primary-foreground: #FAF6F0;
+  --sidebar-accent: #E9DECE;
+  --sidebar-accent-foreground: #3D3229;
+  --sidebar-border: #D6CFC6;
+  --sidebar-ring: #9D5F1B;
+}
+
+/* Dark mode — warm brown hall, not cold blue */
+.dark {
+  --background: #1E1A16;
+  --foreground: #E8E0D4;
+
+  --card: #2A2420;
+  --card-foreground: #E8E0D4;
+  --popover: #2A2420;
+  --popover-foreground: #E8E0D4;
+
+  --primary: #C4813A;
+  --primary-foreground: #1E1A16;
+
+  --secondary: #3A322A;
+  --secondary-foreground: #E8E0D4;
+
+  --muted: #332C26;
+  --muted-foreground: #A89888;
+
+  --accent: #2E3429;
+  --accent-foreground: #E8E0D4;
+
+  --destructive: #C45050;
+
+  --border: #3A322A;
+  --input: #3A322A;
+  --ring: #C4813A;
+
+  --chat-bot: #332C26;
+  --chat-user: #2E3429;
+
+  --chart-1: #C4813A;
+  --chart-2: #7F9A83;
+  --chart-3: #A89888;
+  --chart-4: #D4A05A;
+  --chart-5: #5B7A5E;
+
+  --sidebar: #2A2420;
+  --sidebar-foreground: #E8E0D4;
+  --sidebar-primary: #C4813A;
+  --sidebar-primary-foreground: #1E1A16;
+  --sidebar-accent: #332C26;
+  --sidebar-accent-foreground: #E8E0D4;
+  --sidebar-border: #3A322A;
+  --sidebar-ring: #C4813A;
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
   }
-}
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+  }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Subtle paper grain texture on the body */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 50;
+    opacity: 0.03;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
+    background-repeat: repeat;
+    background-size: 256px 256px;
+  }
 }
