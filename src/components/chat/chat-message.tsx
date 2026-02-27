@@ -7,10 +7,39 @@ interface ChatMessageProps {
   content: string;
 }
 
+function formatInline(text: string): React.ReactNode[] {
+  // Parse **bold** and *italic* markdown
+  const parts: React.ReactNode[] = [];
+  const regex = /(\*\*(.+?)\*\*|\*(.+?)\*)/g;
+  let lastIndex = 0;
+  let match;
+
+  while ((match = regex.exec(text)) !== null) {
+    if (match.index > lastIndex) {
+      parts.push(text.slice(lastIndex, match.index));
+    }
+    if (match[2]) {
+      // **bold**
+      parts.push(<strong key={match.index} className="font-semibold">{match[2]}</strong>);
+    } else if (match[3]) {
+      // *italic*
+      parts.push(<em key={match.index}>{match[3]}</em>);
+    }
+    lastIndex = regex.lastIndex;
+  }
+
+  if (lastIndex < text.length) {
+    parts.push(text.slice(lastIndex));
+  }
+
+  return parts;
+}
+
 function formatContent(text: string) {
   // Split into paragraphs and detect quoted lines (starting with ")
   return text.split("\n\n").map((paragraph, i) => {
-    const trimmed = paragraph.trim();
+    // Strip markdown headers (# Header → Header)
+    const trimmed = paragraph.trim().replace(/^#{1,6}\s+/, "");
     if (!trimmed) return null;
 
     // Detect quotes — lines wrapped in "..." or starting with "
@@ -24,14 +53,14 @@ function formatContent(text: string) {
           key={i}
           className="my-2 border-l-2 border-primary/40 pl-4 italic text-foreground/80"
         >
-          {trimmed}
+          {formatInline(trimmed)}
         </blockquote>
       );
     }
 
     return (
       <p key={i} className={i > 0 ? "mt-3" : ""}>
-        {trimmed}
+        {formatInline(trimmed)}
       </p>
     );
   });

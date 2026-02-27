@@ -18,6 +18,12 @@ export const metadata: Metadata = {
     "A contemplative chatbot grounded in the teachings of S.N. Goenka",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export default function RootLayout({
   children,
 }: Readonly<{

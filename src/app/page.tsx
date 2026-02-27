@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useCallback } from "react";
 import { ChatMessage } from "@/components/chat/chat-message";
 import { ChatInput } from "@/components/chat/chat-input";
 import { TypingIndicator } from "@/components/chat/typing-indicator";
@@ -13,17 +13,71 @@ interface Message {
 }
 
 
+// Characters to render per tick — controls streaming speed
+const CHARS_PER_TICK = 2;
+const TICK_MS = 30; // ~66 chars/sec, roughly 3x slower than raw streaming
+
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  useEffect(() => {
-    if (scrollRef.current) {
-      scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  // Streaming throttle refs
+  const bufferRef = useRef("");
+  const displayedRef = useRef("");
+  const tickRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const activeMessageIdRef = useRef<string | null>(null);
+
+  const stopTicker = useCallback(() => {
+    if (tickRef.current) {
+      clearInterval(tickRef.current);
+      tickRef.current = null;
     }
-  }, [messages, isTyping]);
+  }, []);
+
+  const startTicker = useCallback((messageId: string) => {
+    stopTicker();
+    activeMessageIdRef.current = messageId;
+    displayedRef.current = "";
+    bufferRef.current = "";
+
+    const streamDoneRef = { current: false };
+    tickRef.current = setInterval(() => {
+      const buf = bufferRef.current;
+      const disp = displayedRef.current;
+
+      if (disp.length < buf.length) {
+        const next = buf.slice(0, disp.length + CHARS_PER_TICK);
+        displayedRef.current = next;
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === messageId ? { ...m, content: next } : m
+          )
+        );
+      } else if (streamDoneRef.current) {
+        // Buffer fully displayed and stream is done — stop
+        stopTicker();
+        activeMessageIdRef.current = null;
+      }
+    }, TICK_MS);
+
+    return streamDoneRef;
+  }, [stopTicker]);
+
+  // Signal that the stream has ended — ticker will stop once it catches up
+  const markStreamDone = useCallback((streamDoneRef: { current: boolean }) => {
+    streamDoneRef.current = true;
+  }, []);
+
+  // Scroll to bottom only on explicit triggers, never during streaming
+  const scrollToBottom = useCallback(() => {
+    requestAnimationFrame(() => {
+      if (scrollRef.current) {
+        scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+      }
+    });
+  }, []);
 
   const handleSend = async (content: string) => {
     const userMessage: Message = {
@@ -35,6 +89,7 @@ export default function Home() {
     const allMessages = [...messages, userMessage];
     setMessages(allMessages);
     setIsTyping(true);
+    scrollToBottom();
 
     try {
       const response = await fetch("/api/chat", {
@@ -64,7 +119,6 @@ export default function Home() {
       const reader = response.body!.getReader();
       const decoder = new TextDecoder();
       const botMessageId = (Date.now() + 1).toString();
-      let botContent = "";
 
       // Switch from typing dots to streaming text
       setIsTyping(false);
@@ -72,18 +126,21 @@ export default function Home() {
         ...prev,
         { id: botMessageId, role: "assistant", content: "" },
       ]);
+      scrollToBottom();
+
+      // Start the throttled ticker
+      const streamDoneRef = startTicker(botMessageId);
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
 
-        botContent += decoder.decode(value, { stream: true });
-        setMessages((prev) =>
-          prev.map((m) =>
-            m.id === botMessageId ? { ...m, content: botContent } : m
-          )
-        );
+        // Feed chunks into the buffer; the ticker drips them out
+        bufferRef.current += decoder.decode(value, { stream: true });
       }
+
+      // Signal stream is done — ticker will stop once it catches up
+      markStreamDone(streamDoneRef);
     } catch (error) {
       console.error("Chat error:", error);
       setIsTyping(false);
