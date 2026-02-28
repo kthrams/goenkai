@@ -39,7 +39,7 @@ export function WelcomeScreen({
           initial="hidden"
           animate="visible"
           custom={0}
-          className="mb-3 flex items-center justify-center gap-2.5 font-serif text-4xl font-medium tracking-tight text-foreground"
+          className="mb-3 flex items-center justify-center gap-[5px] font-serif text-4xl font-medium tracking-tight text-foreground"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" className="h-8 w-8">
             <g transform="translate(16,16)">

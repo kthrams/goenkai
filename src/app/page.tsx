@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect, useCallback } from "react";
+import { useState, useRef, useCallback, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { ChatMessage } from "@/components/chat/chat-message";
 import { ChatInput } from "@/components/chat/chat-input";
 import { TypingIndicator } from "@/components/chat/typing-indicator";
@@ -10,14 +11,18 @@ interface Message {
   id: string;
   role: "user" | "assistant";
   content: string;
+  streaming?: boolean;
 }
 
+export type StreamVariant = "a" | "b" | null;
 
-// Words to render per tick — controls streaming speed
-const WORDS_PER_TICK = 1;
-const TICK_MS = 50; // ~20 words/sec, smooth word-by-word reveal
+function Chat() {
+  const searchParams = useSearchParams();
+  const variant = (searchParams.get("v") as StreamVariant) || null;
 
-export default function Home() {
+  // Ticker config per variant
+  const tickMs = variant === "a" ? 30 : 50;
+
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
@@ -48,17 +53,23 @@ export default function Home() {
       const disp = displayedRef.current;
 
       if (disp.length < buf.length) {
-        // Advance to the next WORDS_PER_TICK word boundaries
-        let pos = disp.length;
-        let wordsFound = 0;
-        while (pos < buf.length && wordsFound < WORDS_PER_TICK) {
-          // Skip whitespace
-          while (pos < buf.length && /\s/.test(buf[pos])) pos++;
-          // Skip word characters
-          while (pos < buf.length && !/\s/.test(buf[pos])) pos++;
-          wordsFound++;
+        let next: string;
+
+        if (variant === "a") {
+          // Character-based: 2 chars per tick
+          next = buf.slice(0, disp.length + 2);
+        } else {
+          // Word-based: advance to next word boundary
+          let pos = disp.length;
+          let wordsFound = 0;
+          while (pos < buf.length && wordsFound < 1) {
+            while (pos < buf.length && /\s/.test(buf[pos])) pos++;
+            while (pos < buf.length && !/\s/.test(buf[pos])) pos++;
+            wordsFound++;
+          }
+          next = buf.slice(0, pos);
         }
-        const next = buf.slice(0, pos);
+
         displayedRef.current = next;
         setMessages((prev) =>
           prev.map((m) =>
@@ -66,21 +77,25 @@ export default function Home() {
           )
         );
       } else if (streamDoneRef.current) {
-        // Buffer fully displayed and stream is done — stop
+        // Buffer fully displayed and stream is done
         stopTicker();
         activeMessageIdRef.current = null;
+        // Mark streaming as finished
+        setMessages((prev) =>
+          prev.map((m) =>
+            m.id === messageId ? { ...m, streaming: false } : m
+          )
+        );
       }
-    }, TICK_MS);
+    }, tickMs);
 
     return streamDoneRef;
-  }, [stopTicker]);
+  }, [stopTicker, variant, tickMs]);
 
-  // Signal that the stream has ended — ticker will stop once it catches up
   const markStreamDone = useCallback((streamDoneRef: { current: boolean }) => {
     streamDoneRef.current = true;
   }, []);
 
-  // Scroll to bottom only on explicit triggers, never during streaming
   const scrollToBottom = useCallback(() => {
     requestAnimationFrame(() => {
       if (scrollRef.current) {
@@ -114,7 +129,6 @@ export default function Home() {
       });
 
       if (!response.ok) {
-        // Check for specific error types
         try {
           const errorData = await response.json();
           if (errorData.error === "credits_exhausted") {
@@ -130,26 +144,21 @@ export default function Home() {
       const decoder = new TextDecoder();
       const botMessageId = (Date.now() + 1).toString();
 
-      // Switch from typing dots to streaming text
       setIsTyping(false);
       setMessages((prev) => [
         ...prev,
-        { id: botMessageId, role: "assistant", content: "" },
+        { id: botMessageId, role: "assistant", content: "", streaming: true },
       ]);
       scrollToBottom();
 
-      // Start the throttled ticker
       const streamDoneRef = startTicker(botMessageId);
 
       while (true) {
         const { done, value } = await reader.read();
         if (done) break;
-
-        // Feed chunks into the buffer; the ticker drips them out
         bufferRef.current += decoder.decode(value, { stream: true });
       }
 
-      // Signal stream is done — ticker will stop once it catches up
       markStreamDone(streamDoneRef);
     } catch (error) {
       console.error("Chat error:", error);
@@ -183,7 +192,7 @@ export default function Home() {
               setShowClearDialog(true);
             }
           }}
-          className="flex items-center gap-1.5 font-serif text-lg font-medium tracking-tight text-foreground transition-opacity duration-200 hover:opacity-70"
+          className="flex items-center gap-[3px] font-serif text-lg font-medium tracking-tight text-foreground transition-opacity duration-200 hover:opacity-70"
         >
           <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" className="h-5 w-5">
             <g transform="translate(16,16)">
@@ -247,7 +256,13 @@ export default function Home() {
         {hasMessages ? (
           <div className="mx-auto flex w-full max-w-2xl flex-col gap-5 px-4 py-6">
             {messages.map((msg) => (
-              <ChatMessage key={msg.id} role={msg.role} content={msg.content} />
+              <ChatMessage
+                key={msg.id}
+                role={msg.role}
+                content={msg.content}
+                streaming={msg.streaming}
+                variant={variant}
+              />
             ))}
             {isTyping && <TypingIndicator />}
           </div>
@@ -262,5 +277,13 @@ export default function Home() {
       {/* Input — only pinned to bottom during active chat */}
       {hasMessages && <ChatInput onSend={handleSend} disabled={isTyping} />}
     </div>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense>
+      <Chat />
+    </Suspense>
   );
 }
