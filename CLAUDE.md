@@ -32,7 +32,6 @@ A Vipassana RAG chatbot — answers questions about Dhamma/meditation using S.N.
 - **AI evals** (Sprint 4): Build golden set of 15-20 Q&A pairs, score chatbot quality, iterate on chunking/prompt/config
 - Chunk quality investigation: 91 discourse chunks are 3x larger than average, 381 small fragments may be noise (see goenkai memory for full analysis)
 - No overlap configured in chunking — potential improvement
-- Temperature not explicitly set (defaults to 1.0) — consider lowering to 0.3-0.5 for more consistent answers
 
 ## Key design decisions
 - Design moodboard at `docs/design-moodboard.md` (12 references analyzed)
@@ -45,6 +44,9 @@ A Vipassana RAG chatbot — answers questions about Dhamma/meditation using S.N.
 - Components: shadcn/ui (Radix primitives)
 - Fonts: Inter (body) + Lora (brand/serif)
 - Icons: Lucide React
-- LLM: Anthropic Claude Haiku (`claude-haiku-4-5-20251001`)
+- LLM: Anthropic Claude Haiku (`claude-haiku-4-5-20251001`), `temperature: 0.7`, `max_tokens: 800`
 - Embeddings: OpenAI `text-embedding-3-small`
 - Database: Supabase with pgvector extension
+
+## System prompt structure
+The system prompt in `src/app/api/chat/route.ts` is structured with **brevity rules at the top** (RESPONSE FORMAT block) because instruction position matters — rules near the top get stronger compliance. Key lesson from a truncation bug: `max_tokens` is a safety net, not a length shaper. The system prompt controls response length; `max_tokens: 800` just prevents hard cutoffs.
