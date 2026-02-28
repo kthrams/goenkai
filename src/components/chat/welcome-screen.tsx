@@ -39,9 +39,21 @@ export function WelcomeScreen({
           initial="hidden"
           animate="visible"
           custom={0}
-          className="mb-3 font-serif text-4xl font-medium tracking-tight text-foreground"
+          className="mb-3 flex items-center justify-center gap-2.5 font-serif text-4xl font-medium tracking-tight text-foreground"
         >
-          Goenk<span className="text-primary/70">ai</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" className="h-8 w-8">
+            <g transform="translate(16,16)">
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.85" transform="rotate(0)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.7" transform="rotate(60)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.55" transform="rotate(120)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.85" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.7" transform="rotate(240)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.55" transform="rotate(300)"/>
+              <circle cx="0" cy="0" r="2.5" fill="var(--background)"/>
+              <circle cx="0" cy="0" r="1.5" fill="currentColor"/>
+            </g>
+          </svg>
+          <span>Goenk<span className="text-primary/70">ai</span></span>
         </motion.h1>
 
         {/* Description */}

@@ -13,9 +13,9 @@ interface Message {
 }
 
 
-// Characters to render per tick — controls streaming speed
-const CHARS_PER_TICK = 2;
-const TICK_MS = 30; // ~66 chars/sec, roughly 3x slower than raw streaming
+// Words to render per tick — controls streaming speed
+const WORDS_PER_TICK = 1;
+const TICK_MS = 50; // ~20 words/sec, smooth word-by-word reveal
 
 export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -48,7 +48,17 @@ export default function Home() {
       const disp = displayedRef.current;
 
       if (disp.length < buf.length) {
-        const next = buf.slice(0, disp.length + CHARS_PER_TICK);
+        // Advance to the next WORDS_PER_TICK word boundaries
+        let pos = disp.length;
+        let wordsFound = 0;
+        while (pos < buf.length && wordsFound < WORDS_PER_TICK) {
+          // Skip whitespace
+          while (pos < buf.length && /\s/.test(buf[pos])) pos++;
+          // Skip word characters
+          while (pos < buf.length && !/\s/.test(buf[pos])) pos++;
+          wordsFound++;
+        }
+        const next = buf.slice(0, pos);
         displayedRef.current = next;
         setMessages((prev) =>
           prev.map((m) =>
@@ -173,9 +183,21 @@ export default function Home() {
               setShowClearDialog(true);
             }
           }}
-          className="font-serif text-lg font-medium tracking-tight text-foreground transition-opacity duration-200 hover:opacity-70"
+          className="flex items-center gap-1.5 font-serif text-lg font-medium tracking-tight text-foreground transition-opacity duration-200 hover:opacity-70"
         >
-          Goenk<span className="text-primary/70">ai</span>
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="none" className="h-5 w-5">
+            <g transform="translate(16,16)">
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.85" transform="rotate(0)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.7" transform="rotate(60)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.55" transform="rotate(120)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.85" transform="rotate(180)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.7" transform="rotate(240)"/>
+              <ellipse cx="0" cy="-6.5" rx="3.2" ry="6.5" fill="currentColor" opacity="0.55" transform="rotate(300)"/>
+              <circle cx="0" cy="0" r="2.5" fill="var(--background)"/>
+              <circle cx="0" cy="0" r="1.5" fill="currentColor"/>
+            </g>
+          </svg>
+          <span>Goenk<span className="text-primary/70">ai</span></span>
         </button>
       </header>
 
