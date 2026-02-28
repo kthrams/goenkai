@@ -1,7 +1,6 @@
 "use client";
 
-import { useState, useRef, useCallback, Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { useState, useRef, useCallback } from "react";
 import { ChatMessage } from "@/components/chat/chat-message";
 import { ChatInput } from "@/components/chat/chat-input";
 import { TypingIndicator } from "@/components/chat/typing-indicator";
@@ -14,15 +13,11 @@ interface Message {
   streaming?: boolean;
 }
 
-export type StreamVariant = "a" | "b" | null;
+// Characters to render per tick — controls streaming speed
+const CHARS_PER_TICK = 2;
+const TICK_MS = 30; // ~66 chars/sec with fade-in on each character
 
-function Chat() {
-  const searchParams = useSearchParams();
-  const variant = (searchParams.get("v") as StreamVariant) || null;
-
-  // Ticker config per variant
-  const tickMs = variant === "a" ? 30 : 50;
-
+export default function Home() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [showClearDialog, setShowClearDialog] = useState(false);
@@ -53,23 +48,7 @@ function Chat() {
       const disp = displayedRef.current;
 
       if (disp.length < buf.length) {
-        let next: string;
-
-        if (variant === "a") {
-          // Character-based: 2 chars per tick
-          next = buf.slice(0, disp.length + 2);
-        } else {
-          // Word-based: advance to next word boundary
-          let pos = disp.length;
-          let wordsFound = 0;
-          while (pos < buf.length && wordsFound < 1) {
-            while (pos < buf.length && /\s/.test(buf[pos])) pos++;
-            while (pos < buf.length && !/\s/.test(buf[pos])) pos++;
-            wordsFound++;
-          }
-          next = buf.slice(0, pos);
-        }
-
+        const next = buf.slice(0, disp.length + CHARS_PER_TICK);
         displayedRef.current = next;
         setMessages((prev) =>
           prev.map((m) =>
@@ -87,10 +66,10 @@ function Chat() {
           )
         );
       }
-    }, tickMs);
+    }, TICK_MS);
 
     return streamDoneRef;
-  }, [stopTicker, variant, tickMs]);
+  }, [stopTicker]);
 
   const markStreamDone = useCallback((streamDoneRef: { current: boolean }) => {
     streamDoneRef.current = true;
@@ -261,7 +240,6 @@ function Chat() {
                 role={msg.role}
                 content={msg.content}
                 streaming={msg.streaming}
-                variant={variant}
               />
             ))}
             {isTyping && <TypingIndicator />}
@@ -277,13 +255,5 @@ function Chat() {
       {/* Input — only pinned to bottom during active chat */}
       {hasMessages && <ChatInput onSend={handleSend} disabled={isTyping} />}
     </div>
-  );
-}
-
-export default function Home() {
-  return (
-    <Suspense>
-      <Chat />
-    </Suspense>
   );
 }

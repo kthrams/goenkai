@@ -165,12 +165,9 @@
     font-family: var(--font-sans);
   }
 
-  /* Streaming fade-in animations */
+  /* Streaming character fade-in */
   .stream-char-fade {
     animation: streamFadeIn 150ms ease-in forwards;
-  }
-  .stream-word-fade {
-    animation: streamFadeIn 250ms ease-in forwards;
   }
 
   @keyframes streamFadeIn {

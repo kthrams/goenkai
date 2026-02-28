@@ -1,13 +1,11 @@
 "use client";
 
 import { cn } from "@/lib/utils";
-import type { StreamVariant } from "@/app/page";
 
 interface ChatMessageProps {
   role: "user" | "assistant";
   content: string;
   streaming?: boolean;
-  variant?: StreamVariant;
 }
 
 function formatInline(text: string): React.ReactNode[] {
@@ -78,28 +76,12 @@ function renderCharFade(content: string) {
   ));
 }
 
-/** Render each word as an individually-fading span, whitespace is plain */
-function renderWordFade(content: string) {
-  // Split preserving whitespace segments
-  return content.split(/(\s+)/).map((segment, i) => {
-    if (/^\s+$/.test(segment)) {
-      return <span key={i}>{segment}</span>;
-    }
-    return (
-      <span key={i} className="stream-word-fade">
-        {segment}
-      </span>
-    );
-  });
-}
-
-export function ChatMessage({ role, content, streaming, variant }: ChatMessageProps) {
+export function ChatMessage({ role, content, streaming }: ChatMessageProps) {
   const isBot = role === "assistant";
 
-  // Choose render mode: fade-in during streaming, formatted after
   let renderedContent: React.ReactNode;
-  if (isBot && streaming && variant) {
-    renderedContent = variant === "a" ? renderCharFade(content) : renderWordFade(content);
+  if (isBot && streaming) {
+    renderedContent = renderCharFade(content);
   } else {
     renderedContent = isBot ? formatContent(content) : content;
   }
