@@ -5,6 +5,7 @@ import { cn } from "@/lib/utils";
 interface ChatMessageProps {
   role: "user" | "assistant";
   content: string;
+  streaming?: boolean;
 }
 
 function formatInline(text: string): React.ReactNode[] {
@@ -66,8 +67,24 @@ function formatContent(text: string) {
   });
 }
 
-export function ChatMessage({ role, content }: ChatMessageProps) {
+/** Render each character as an individually-fading span */
+function renderCharFade(content: string) {
+  return content.split("").map((char, i) => (
+    <span key={i} className="stream-char-fade">
+      {char}
+    </span>
+  ));
+}
+
+export function ChatMessage({ role, content, streaming }: ChatMessageProps) {
   const isBot = role === "assistant";
+
+  let renderedContent: React.ReactNode;
+  if (isBot && streaming) {
+    renderedContent = renderCharFade(content);
+  } else {
+    renderedContent = isBot ? formatContent(content) : content;
+  }
 
   return (
     <div
@@ -86,7 +103,7 @@ export function ChatMessage({ role, content }: ChatMessageProps) {
         style={{ lineHeight: "1.75" }}
       >
         <div className="whitespace-pre-wrap text-[15px]">
-          {isBot ? formatContent(content) : content}
+          {renderedContent}
         </div>
       </div>
     </div>
