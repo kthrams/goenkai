@@ -67,13 +67,29 @@ function formatContent(text: string) {
   });
 }
 
-/** Render each character as an individually-fading span */
+/** Render each character as an individually-fading span, paragraph-aware */
 function renderCharFade(content: string) {
-  return content.split("").map((char, i) => (
-    <span key={i} className="stream-char-fade">
-      {char}
-    </span>
-  ));
+  return content.split("\n\n").map((paragraph, pIdx) => {
+    const trimmed = paragraph.trim();
+    if (!trimmed) return null;
+
+    let charOffset = 0;
+    for (let p = 0; p < pIdx; p++) {
+      charOffset += content.split("\n\n")[p].length + 2; // +2 for \n\n
+    }
+
+    const chars = trimmed.split("").map((char, i) => (
+      <span key={charOffset + i} className="stream-char-fade">
+        {char}
+      </span>
+    ));
+
+    return (
+      <p key={pIdx} className={pIdx > 0 ? "mt-3" : ""}>
+        {chars}
+      </p>
+    );
+  });
 }
 
 export function ChatMessage({ role, content, streaming }: ChatMessageProps) {
