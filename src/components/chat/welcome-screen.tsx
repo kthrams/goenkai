@@ -9,10 +9,10 @@ interface WelcomeScreenProps {
 }
 
 const suggestions = [
-  "Explain the benefits of Vipassana meditation",
-  "What happens during a 10-day course?",
-  "I'm struggling to keep up my practice",
-  "How will this help me in my day-to-day life?",
+  "I want to be more balanced in life",
+  "How do I stop arguing with others?",
+  "I can't stop worrying about the future",
+  "How do I deal with anxiety at work?",
 ];
 
 const ease = [0.25, 0.4, 0.25, 1] as const;
@@ -75,7 +75,7 @@ export function WelcomeScreen({
           custom={0.2}
           className="mb-10 text-[13px] text-muted-foreground/60"
         >
-          This is an AI — responses are inspired by Goenka&apos;s teachings but may contain inaccuracies.
+          This is an AI. Responses are inspired by Goenka&apos;s teachings but may contain inaccuracies.
         </motion.p>
 
         {/* Input */}
