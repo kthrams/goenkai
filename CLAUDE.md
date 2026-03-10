@@ -28,15 +28,14 @@ A Vipassana RAG chatbot — answers questions about Dhamma/meditation using S.N.
 - Rate limiting (hourly + daily) for cost protection
 - `.env.local` configured with Anthropic, OpenAI, and Supabase keys
 
-### Portfolio documentation — DONE
+### Portfolio documentation — DONE (published 2026-03-10)
 - README.md rewritten as portfolio piece (why I built this, how it works, tech stack, design philosophy)
 - 5 public docs in `docs/`: architecture, design-and-experience, prompt-engineering, data-corpus, design-inspiration
 - 3 Excalidraw diagrams with PNG exports (system-architecture, prompt-structure, ingestion-pipeline)
 - 2 internal docs in `_private/` (content-sources-research, suggestion-chips-research) — gitignored
-- Nothing committed yet — awaiting Kevin's review in Obsidian
+- Detailed architecture explanations preserved in `_private/architecture-reference.md`
 
 ### Next steps
-- **Review and commit docs** — Kevin reviewing all docs in Obsidian before pushing to GitHub
 - **AI evals** (Sprint 4): Build golden set of 15-20 Q&A pairs, score chatbot quality, iterate on chunking/prompt/config
 - Chunk quality investigation: 91 discourse chunks are 3x larger than average, 381 small fragments may be noise (see goenkai memory for full analysis)
 - No overlap configured in chunking — potential improvement
