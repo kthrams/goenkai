@@ -17,7 +17,7 @@ A Vipassana RAG chatbot — answers questions about Dhamma/meditation using S.N.
 
 ### Knowledge base — DONE
 - 1.37M words across 130+ files from 20+ sources in `sources/`
-- See `docs/content-sources-research.md` for full inventory
+- Full source inventory in `_private/content-sources-research.md`
 
 ### Backend — DONE
 - Anthropic API (Claude Haiku) for LLM responses with Goenka voice system prompt
@@ -28,13 +28,21 @@ A Vipassana RAG chatbot — answers questions about Dhamma/meditation using S.N.
 - Rate limiting (hourly + daily) for cost protection
 - `.env.local` configured with Anthropic, OpenAI, and Supabase keys
 
+### Portfolio documentation — DONE
+- README.md rewritten as portfolio piece (why I built this, how it works, tech stack, design philosophy)
+- 5 public docs in `docs/`: architecture, design-and-experience, prompt-engineering, data-corpus, design-inspiration
+- 3 Excalidraw diagrams with PNG exports (system-architecture, prompt-structure, ingestion-pipeline)
+- 2 internal docs in `_private/` (content-sources-research, suggestion-chips-research) — gitignored
+- Nothing committed yet — awaiting Kevin's review in Obsidian
+
 ### Next steps
+- **Review and commit docs** — Kevin reviewing all docs in Obsidian before pushing to GitHub
 - **AI evals** (Sprint 4): Build golden set of 15-20 Q&A pairs, score chatbot quality, iterate on chunking/prompt/config
 - Chunk quality investigation: 91 discourse chunks are 3x larger than average, 381 small fragments may be noise (see goenkai memory for full analysis)
 - No overlap configured in chunking — potential improvement
 
 ## Key design decisions
-- Design moodboard at `docs/design-moodboard.md` (12 references analyzed)
+- Design inspiration at `docs/design-inspiration.md` (7 references analyzed)
 - Philosophy: "Frame, don't compete" — UI is invisible, Goenka's words are the star
 - Dark mode tokens defined but not yet implemented
 

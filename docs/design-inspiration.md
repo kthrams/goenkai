@@ -1,50 +1,11 @@
-# Goenkai Design Moodboard
-## "Serene / Earthy / Meditative / Calm" Visual References
+# Design Inspiration
+## Visual References for Goenkai's Design Direction
 
-**Purpose:** Visual reference research for Goenkai chatbot UI design. Each reference includes what to steal and how it could translate to a chat interface.
-
----
-
-## 1. Calm (App)
-**Category:** Meditation app UI | **URL:** [calm.com](https://www.calm.com)
-
-| Attribute | Details |
-|---|---|
-| **Color palette** | Deep navy "Cloud Burst" (#1B2250) as primary background, Havelock Blue (#6282E3) for accents, White (#FFFFFF) for text. Nature scenes layered over dark backgrounds. |
-| **Typography** | Clean sans-serif, light weight for body text against dark backgrounds. Generous line spacing. Headers are medium-weight. |
-| **Key visual elements** | Full-bleed nature photography (forests, lakes, night skies) as backgrounds. Dark UI with content cards floating above. Rounded corners everywhere. Minimal chrome. |
-| **What makes it feel serene** | The dark background creates a "nighttime" feeling — like meditating with eyes closed. Content floats in darkness. Very little visual clutter. The blue-on-dark palette feels like a quiet night sky. |
-| **Steal for Goenkai** | The dark background approach could work beautifully for Goenkai — a warm dark background (not blue-dark, but brown/charcoal-dark) would feel like sitting in a dhamma hall at night. Chat bubbles floating on a dark canvas. |
+**Purpose:** Visual reference research for Goenkai's chatbot UI design. Each reference includes what influenced the final design and how it translated to a chat interface.
 
 ---
 
-## 2. Headspace (App + Brand System)
-**Category:** Meditation app UI | **URL:** [headspace.com](https://www.headspace.com)
-
-| Attribute | Details |
-|---|---|
-| **Color palette** | Signature vibrant orange as primary, expanding to warm yellows, calming blues (#0C6FF9), greens (#01A652), and azure (#00A4FF). Bold but not harsh. White backgrounds in many screens. |
-| **Typography** | Custom typeface based on Colophon's Apercu — rounded, friendly letterforms. "Flex from playful to clinical." Soft shapes in letterforms that echo their smile logo. |
-| **Key visual elements** | Signature illustrations with simple, blob-like characters. Orange circle as modular design element. Soft gradients. Heavy use of whitespace. Rounded everything. No sharp edges. |
-| **What makes it feel serene** | Paradox — Headspace is vibrant, not muted, yet feels calm. The trick: massive whitespace, rounded shapes, and consistent illustration style create visual predictability. Your eye rests because there's nothing jarring. "Emotional minimalism." |
-| **Steal for Goenkai** | NOT the color palette (too playful for Vipassana's gravitas), but the spacing philosophy. Headspace proves that generous padding + rounded shapes + consistent visual language = calm, even without muted colors. Apply this to chat bubble sizing, message spacing, and input areas. |
-
----
-
-## 3. Waking Up by Sam Harris (App)
-**Category:** Meditation app UI | **URL:** [wakingup.com](https://www.wakingup.com)
-
-| Attribute | Details |
-|---|---|
-| **Color palette** | Warm dark tones — deep charcoals and warm blacks as backgrounds. Muted accent colors. Restrained palette with intentional use of color. |
-| **Typography** | Clean, editorial sans-serif. Prioritizes readability over personality. Clean hierarchy with plenty of spacing between sections. |
-| **Key visual elements** | Custom hand-drawn portraits of teachers (by Jason Chatfield). Minimal interface chrome. Content-first design — the teachings, not the UI, are the star. Dark backgrounds with warm undertones. Four clear navigation sections: Daily, Practice, Theory, Life. |
-| **What makes it feel serene** | Most "intellectual" of the meditation apps. Deliberately avoids gamification and aggressive engagement tactics. The design communicates: this is serious contemplative practice, not a wellness trend. Clean, quiet, almost austere. |
-| **Steal for Goenkai** | This is the closest existing reference to what Goenkai needs. Same serious contemplative tone. The warm-dark palette, editorial typography, and content-first approach translate directly to a chatbot. Imagine Goenkai's chat interface with this same "quiet intellectual warmth." |
-
----
-
-## 4. Plum Village (App)
+## 1. Plum Village (App)
 **Category:** Buddhist meditation app | **URL:** [plumvillage.app](https://plumvillage.app)
 
 | Attribute | Details |
@@ -57,7 +18,7 @@
 
 ---
 
-## 5. Aesop (Skincare Brand Website)
+## 2. Aesop (Skincare Brand Website)
 **Category:** Luxury brand with earthy-minimal aesthetic | **URL:** [aesop.com](https://www.aesop.com)
 
 | Attribute | Details |
@@ -70,7 +31,7 @@
 
 ---
 
-## 6. Amangiri Resort (Architecture + Brand)
+## 3. Amangiri Resort (Architecture + Brand)
 **Category:** Luxury wellness/retreat brand | **URL:** [aman.com/resorts/amangiri](https://www.aman.com/resorts/amangiri)
 
 | Attribute | Details |
@@ -83,20 +44,7 @@
 
 ---
 
-## 7. MUD\WTR (Wellness Brand)
-**Category:** Wellness / DTC brand | **URL:** [mudwtr.com](https://mudwtr.com)
-
-| Attribute | Details |
-|---|---|
-| **Color palette** | Earth tones throughout — browns, tans, warm neutrals. Minimal use of bright color. Matte textures. |
-| **Typography** | Clean, modern sans-serif. Strong but not aggressive. All-caps headings in some places. Readable body text. |
-| **Key visual elements** | Minimal illustration. Earthy product photography. Matte packaging. "Quiet luxury" feeling. Anti-hustle energy — calm, intentional, grounded. |
-| **What makes it feel serene** | MUD\WTR explicitly brands against the "hustle culture" caffeine aesthetic. Their visual language says: slow down, be present, morning ritual not morning rush. The earth tones and matte finishes create tactile warmth on a screen. |
-| **Steal for Goenkai** | The anti-hustle branding philosophy maps perfectly to Vipassana. Goenkai should feel like it has nowhere to rush. Also: the matte texture treatment. Most apps feel glossy and digital — a matte, slightly grainy texture would make Goenkai feel physical and grounded, like the pages of an old book. |
-
----
-
-## 8. Thich Nhat Hanh's Calligraphy (Book Covers + Art)
+## 4. Thich Nhat Hanh's Calligraphy (Book Covers + Art)
 **Category:** Buddhist book/art design | **URL:** [store.lionsroar.com/collections/calligraphy](https://store.lionsroar.com/collections/calligraphy)
 
 | Attribute | Details |
@@ -109,7 +57,7 @@
 
 ---
 
-## 9. "Desert Dunes" Palette (from The Brand Alchemists)
+## 5. "Desert Dunes" Palette (from The Brand Alchemists)
 **Category:** Curated color palette | **URL:** [thebrandalchemists.com](https://thebrandalchemists.com/blogs/news/holistic-brand-color-palettes-2025)
 
 | Attribute | Details |
@@ -120,7 +68,7 @@
 
 ---
 
-## 10. "Mountain Air" Palette (from The Brand Alchemists)
+## 6. "Mountain Air" Palette (from The Brand Alchemists)
 **Category:** Curated color palette | **URL:** [thebrandalchemists.com](https://thebrandalchemists.com/blogs/news/holistic-brand-color-palettes-2025)
 
 | Attribute | Details |
@@ -131,7 +79,7 @@
 
 ---
 
-## 11. Wysa (AI Mental Health Chatbot)
+## 7. Wysa (AI Mental Health Chatbot)
 **Category:** Therapeutic AI chatbot | **URL:** [wysa.com](https://www.wysa.com)
 
 | Attribute | Details |
@@ -144,22 +92,9 @@
 
 ---
 
-## 12. Buddhify (App)
-**Category:** Meditation app | **URL:** [buddhify.com](https://buddhify.com)
-
-| Attribute | Details |
-|---|---|
-| **Color palette** | Multicolored wheel interface — each category gets its own color segment. Purple features prominently. Deeper shades of blue, purple, and green. |
-| **Typography** | Clean sans-serif. Modern and readable. |
-| **Key visual elements** | The signature color wheel — meditations organized by life situation (walking, sleeping, working, etc.). Each wedge is a different calming hue. The wheel itself is the navigation. |
-| **What makes it feel serene** | The wheel creates visual harmony — like a mandala. No lists, no grids, no hierarchy. Everything is equidistant from center, nothing is "more important." The circular design mirrors meditation itself — cyclical, centered, balanced. |
-| **Steal for Goenkai** | Not the specific wheel UI, but the principle: circular and centered design elements feel inherently meditative. If Goenkai has topic selection or navigation, consider radial/circular layouts over linear ones. Also: the color-as-category system could help users navigate different types of Goenka's teachings. |
-
----
-
 ## Synthesis: Design Direction for Goenkai
 
-### Primary Color Palette (recommended)
+### Primary Color Palette
 
 Based on the research, a warm/earthy direction fits Goenkai best — it connects to:
 - Vipassana center aesthetics (earth, wood, simple materials)
@@ -169,7 +104,7 @@ Based on the research, a warm/earthy direction fits Goenkai best — it connects
 | Role | Color | Hex | Source Inspiration |
 |---|---|---|---|
 | Background (light mode) | Warm cream / parchment | #F5F0E8 | Aesop, TNH calligraphy |
-| Background (dark mode) | Near-black brown | #1E1A16 | Waking Up, Calm, Desert Dunes |
+| Background (dark mode) | Near-black brown | #1E1A16 | Desert Dunes |
 | Primary text | Deep warm brown | #3D3229 | Aesop, Amangiri |
 | Secondary text | Warm taupe | #8C7E72 | Aesop |
 | Accent (links, active states) | Muted rust/terracotta | #9D5F1B | Desert Dunes |
@@ -193,7 +128,7 @@ Based on the research, a warm/earthy direction fits Goenkai best — it connects
 4. **Rounded, not sharp.** Rounded corners on bubbles, cards, input fields. No harsh geometry.
 5. **Deliberate pacing.** Messages should appear with thoughtful timing, not instant. The chat should feel unhurried.
 6. **Texture over flatness.** Subtle paper/grain texture on backgrounds prevents the clinical-digital feeling.
-7. **Dark mode as default?** Consider: Vipassana meditation often happens with eyes closed, in dim spaces. A warm dark mode (not blue-dark like Calm, but brown-dark like a wooden hall) could be the primary experience.
+7. **Dark mode as default?** Consider: Vipassana meditation often happens with eyes closed, in dim spaces. A warm brown-dark mode (like a wooden hall at night) could be the primary experience.
 
 ### What NOT to do
 - No bright blues (too corporate/clinical)
@@ -206,25 +141,15 @@ Based on the research, a warm/earthy direction fits Goenkai best — it connects
 
 ## Sources
 
-- [Headspace Design System (Figma Blog)](https://www.figma.com/blog/building-a-design-system-that-breathes-with-headspace/)
-- [Headspace Visual Identity (Kimp)](https://www.kimp.io/headspace-brand/)
-- [Headspace Brand Colors (Mobbin)](https://mobbin.com/colors/brand/headspace)
-- [Headspace Rebrand (It's Nice That)](https://www.itsnicethat.com/articles/italic-studio-headspace-graphic-design-project-250424)
-- [Calm Brand Colors (Mobbin)](https://mobbin.com/colors/brand/calm-com)
 - [Plum Village UX/UI Case Study](https://plumvillage.app/about-the-plum-village-app/)
-- [Waking Up Design (MetaLab)](https://www.metalab.com/projects/waking-up)
-- [Waking Up App Artwork](https://everythingisedible.com/who-makes-artwork-for-sam-harris-waking-up-app/)
-- [Meditation App Design Guide (Purrweb)](https://www.purrweb.com/blog/designing-a-meditation-app-tips-step-by-step-guide/)
-- [25 Meditation Website Examples (Subframe)](https://www.subframe.com/tips/meditation-website-design-examples)
 - [Aesop Color Palette (Color-Hex)](https://www.color-hex.com/color-palette/105290)
 - [Aesop Fonts in Use](https://fontsinuse.com/uses/20234/aesop-logo-website-and-packaging)
 - [Amangiri Design (Dayhouse Studio)](https://www.dayhousestudio.com/dayhouse-living-issue-3/amangiri-a-masterclass-in-multisensory-healing-design)
-- [MUD\WTR Brand Review](https://thegoodfinds.co/mud-wtr-brand-review/)
 - [Holistic Brand Color Palettes (The Brand Alchemists)](https://thebrandalchemists.com/blogs/news/holistic-brand-color-palettes-2025)
 - [Muted Earthy Tones (SchemeColor)](https://www.schemecolor.com/muted-earthy-tones.php)
 - [Chatbot UI Examples (Eleken)](https://www.eleken.co/blog-posts/chatbot-ui-examples)
 - [Chatbot UI Examples (Sendbird)](https://sendbird.com/blog/chatbot-ui)
 - [TNH Calligraphy (Lion's Roar Store)](https://store.lionsroar.com/collections/calligraphy)
-- [Buddhify App](https://buddhify.com/)
 - [Calm UX Aesthetics (Raw.Studio)](https://raw.studio/blog/the-aesthetics-of-calm-ux-how-blur-and-muted-themes-are-redefining-digital-design/)
-- [Insight Timer Design (DesignRush)](https://www.designrush.com/best-designs/apps/insight-timer)
+- [Meditation App Design Guide (Purrweb)](https://www.purrweb.com/blog/designing-a-meditation-app-tips-step-by-step-guide/)
+- [25 Meditation Website Examples (Subframe)](https://www.subframe.com/tips/meditation-website-design-examples)
