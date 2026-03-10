@@ -75,7 +75,15 @@ export function WelcomeScreen({
           custom={0.2}
           className="mb-10 text-[13px] text-muted-foreground/60"
         >
-          This is an AI. Responses are inspired by Goenka&apos;s teachings but may contain inaccuracies.
+          This is an AI. Responses mimic Goenka&apos;s voice but may be inaccurate.{" "}
+          <a
+            href="https://github.com/kthrams/goenkai/blob/main/README.md"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="underline hover:text-muted-foreground"
+          >
+            About this project
+          </a>
         </motion.p>
 
         {/* Input */}
