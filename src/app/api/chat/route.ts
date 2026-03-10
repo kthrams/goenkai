@@ -76,8 +76,44 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    const { messages } = await req.json();
-    const latestMessage = messages[messages.length - 1].content;
+    const body = await req.json();
+    const { messages } = body;
+
+    // Input validation
+    if (!Array.isArray(messages) || messages.length === 0) {
+      return new Response(
+        JSON.stringify({ error: "invalid_request" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (messages.length > 50) {
+      return new Response(
+        JSON.stringify({ error: "invalid_request" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    const lastMsg = messages[messages.length - 1];
+    if (
+      !lastMsg ||
+      typeof lastMsg.content !== "string" ||
+      typeof lastMsg.role !== "string"
+    ) {
+      return new Response(
+        JSON.stringify({ error: "invalid_request" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    if (lastMsg.content.length > 2000) {
+      return new Response(
+        JSON.stringify({ error: "message_too_long" }),
+        { status: 400, headers: { "Content-Type": "application/json" } }
+      );
+    }
+
+    const latestMessage = lastMsg.content;
 
     // 1. Embed the user's question via OpenAI
     const queryEmbedding = await embedText(latestMessage);
@@ -111,10 +147,12 @@ export async function POST(req: NextRequest) {
       system: context
         ? `${SYSTEM_PROMPT}\n\n---\n\nRETRIEVED CONTEXT FROM GOENKA'S TEACHINGS:\n\n${context}`
         : SYSTEM_PROMPT,
-      messages: messages.map((m: { role: string; content: string }) => ({
-        role: m.role,
-        content: m.content,
-      })),
+      messages: messages.map(
+        (m: { role: "user" | "assistant"; content: string }) => ({
+          role: m.role,
+          content: m.content,
+        })
+      ),
     });
 
     // 5. Stream the response back
