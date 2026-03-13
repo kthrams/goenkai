@@ -57,3 +57,6 @@ Goenkai is a functional prototype — the RAG pipeline works, the UX is polished
 | [Knowledge Base](docs/data-corpus.md)             | Corpus curation, chunking strategy, quality analysis                                       |
 | [Design Inspiration](docs/design-inspiration.md)     | Visual references analyzed to define the design direction                                  |
 
+## A note of caution
+
+When I typed in my first question to test the bot, I was shocked. The bot's voice actually sounded like the teacher from the video taped lectures in our course. After some quick research, I found that there is an "afterlife indsutry". Companies recreate people from the dead for profit. Families continue to live with the AI-version of their loved ones who have passed. Be careful when using or building with this technology.
